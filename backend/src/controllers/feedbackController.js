@@ -26,7 +26,7 @@ exports.getAllFeedback = async (req, res) => {
   res.json(feedbacks);
 };
 
-exports.respondToFeedback = async (req, res) => {
+exports.respondFeedback = async (req, res) => {
   const { id } = req.params;
   const { response } = req.body;
 

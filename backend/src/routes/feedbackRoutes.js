@@ -8,6 +8,7 @@ const {
 } = require('../controllers/feedbackController');
 
 const authMiddleware = require('../middlewares/authMiddleware');
+
 const router = express.Router();
 
 router.post('/', authMiddleware(['customer']), submitFeedback);
