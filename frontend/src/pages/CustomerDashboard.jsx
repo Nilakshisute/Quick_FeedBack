@@ -1,9 +1,11 @@
 import { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 // const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 export default function CustomerDashboard() {
+  const navigate = useNavigate();
   const { token, logout } = useContext(AuthContext);
   const [form, setForm] = useState({ category: '', comment: '', rating: 1 });
   const [myFeedback, setMyFeedback] = useState([]);
@@ -26,6 +28,11 @@ export default function CustomerDashboard() {
     });
     setForm({ category: '', comment: '', rating: 1 });
     fetchMyFeedback();
+  };
+
+  const handleLogout = () => {
+    logout();            // Clear token
+    navigate('/login');  // ✅ Redirect to login page
   };
 
   useEffect(() => {
@@ -75,7 +82,7 @@ export default function CustomerDashboard() {
         ))}
       </ul>
 
-      <button onClick={logout}>Logout</button>
+      <button onClick={handleLogout}>Logout</button>
     </div>
   );
 }

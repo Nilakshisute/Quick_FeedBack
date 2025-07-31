@@ -18,10 +18,12 @@ export default function AppRoutes() {
       {user?.role === 'customer' && (
         <Route path="/customer" element={<CustomerDashboard />} />
       )}
+       <Route path="/customer" element={<CustomerDashboard />} />
 
       {user?.role === 'admin' && (
         <Route path="/admin" element={<AdminDashboard />} />
       )}
+       <Route path="/admin" element={<AdminDashboard />} />
     </Routes>
   );
 }

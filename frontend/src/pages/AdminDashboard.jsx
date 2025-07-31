@@ -1,9 +1,11 @@
 import { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 // const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 export default function AdminDashboard() {
+  const navigate = useNavigate(); 
   const { token, logout } = useContext(AuthContext);
   const [feedbackList, setFeedbackList] = useState([]);
   const [response, setResponse] = useState({});
@@ -18,7 +20,7 @@ export default function AdminDashboard() {
 
   const handleRespond = async (id) => {
     await axios.patch(
-      'http://localhost:8000/api/feedback/${id}/respond',
+      `http://localhost:8000/api/feedback/${id}/respond`,
       { response: response[id] },
       { headers: { Authorization: `Bearer ${token}` } }
     );
@@ -27,10 +29,15 @@ export default function AdminDashboard() {
   };
 
   const handleDelete = async (id) => {
-    await axios.delete('http://localhost:8000/api/feedback/${id}', {
+    await axios.delete(`http://localhost:8000/api/feedback/${id}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     fetchAllFeedback();
+  };
+
+  const handleLogout = () => {
+    logout();            // Clear token
+    navigate('/login');  // ✅ Redirect to login page
   };
 
   useEffect(() => {
@@ -69,7 +76,7 @@ export default function AdminDashboard() {
         ))}
       </ul>
 
-      <button onClick={logout}>Logout</button>
+      <button onClick={handleLogout}>Logout</button>
     </div>
   );
 }
